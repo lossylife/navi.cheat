@@ -1,7 +1,9 @@
 % shell
 
-# show disk usage for sub directory
-echo <var4> <var5>
+# dtrace
+rm -f out.user_stacks out.user_folded out.svg \
+       && sudo dtrace -x ustackframes=100 -n 'profile-97 /pid == <pid>/ { @[ustack()] = count();  } tick-<seconds>s { exit(0);  }' -o out.user_stacks \
+       && stackcollapse.pl out.user_stacks > out.user_folded \
+       && flamegraph.pl out.user_folded > out.svg
 
-$ var4: ls -la --- --column 4 --header-lines 1 --delimiter '\s\s+'
-$ var5: ls -la --- --column 5 --header-lines 1 --delimiter '\s\s+'
+$ pid: ps -ef | grep <process_name>
