@@ -1,0 +1,10 @@
+% shell usage
+
+# show disk usage for sub directory
+du -d0 -h
+
+$ echo "hello navi cheat"
+
+# show current path
+pwd
+
